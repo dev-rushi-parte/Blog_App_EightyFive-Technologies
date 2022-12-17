@@ -4,9 +4,9 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import Alert from 'react-bootstrap/Alert';
 import { useNavigate } from 'react-router-dom';
 import styles from './All.module.css'
+import { SingupUser } from '../../Redux/AuthReducer/action';
 
 function SignUp() {
 
@@ -14,9 +14,6 @@ function SignUp() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [show, setShow] = useState(false);
-    const [alertSuccess, setAlertSuccess] = useState(false);
-    const [alertFail, setAlertFail] = useState(false);
-    const [alertSms, setAlertSms] = useState("")
     let dispatch = useDispatch()
     let navigate = useNavigate()
 
@@ -32,33 +29,27 @@ function SignUp() {
             password
         }
         console.log(payload)
-            // dispatch(SingupUser(payload))
+        dispatch(SingupUser(payload))
             .then((res) => {
-                console.log(res)
+
+                // console.log(res)
                 setName("")
                 setEmail("")
                 setPassword("")
 
                 if (res.type == "SINGUP_SUCCESS") {
-                    setAlertSuccess(true)
+
                     alert("Singup Success")
-                    navigate("/login")
-                    setTimeout(() => {
-                        setAlertSuccess(false)
-                    }, 1000)
+                    navigate("/singin")
+
                 }
-                else if (res.type == "SINGUP_FAILURE") {
-                    setAlertFail(true)
-                    setAlertSms("User already exists")
-                    setTimeout(() => {
-                        setAlertFail(false)
-                    }, 1000)
+                else if (res.payload.response.status == 403) {
+
+                    alert("User already exists")
+
                 }
                 else {
-                    setAlertFail(true)
-                    setTimeout(() => {
-                        setAlertFail(false)
-                    }, 1000)
+                    alert("Try again")
                 }
 
             })
@@ -68,15 +59,6 @@ function SignUp() {
         <div>
             <TopNavbar />
             <div style={{ marginTop: "8rem" }}>
-                {alertSuccess ? <Alert id={styles.alert} className='col-md-5  text-center container center_div' key='success' variant='success'>
-                    SuccessFully Singup
-                </Alert> : ""}
-
-
-                {alertFail ? <Alert id={styles.alert} className='col-md-5 text-center container center_div' key='danger' variant='danger'>
-                    {!alertSms == "" ? alertSms : "Somthing went wrong"}
-                </Alert> : ""}
-
 
 
                 <div className='pb-4 container center_div col-md-4 border border-dark rounded-3 mt-5'>
@@ -94,6 +76,7 @@ function SignUp() {
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicEmail">
+
                             <Form.Label>Email address</Form.Label>
                             <Form.Control value={email}
                                 maxLength="30" required
@@ -121,7 +104,7 @@ function SignUp() {
                         <Button className='col-md-12 mt-3 ' variant="primary" type="submit">
                             SignUp
                         </Button>
-                        <Button onClick={() => navigate("/login")} style={{ marginLeft: '50%' }} variant="link"> Have an account? Login</Button>
+                        <Button onClick={() => navigate("/signin")} style={{ marginLeft: '48%' }} variant="link"> Have an account? singin</Button>
                     </Form>
                 </div>
 
