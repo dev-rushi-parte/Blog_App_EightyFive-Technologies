@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import style from './BlogStyle.module.css'
 import { useEffect } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AddBlog } from '../Redux/BlogReducer/action';
 
 
@@ -22,9 +22,10 @@ function WriteBlog() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const token = useSelector((state) => state.auth.authToken);
 
 
-    const SubmitForm = async(e) => {
+    const SubmitForm = async (e) => {
         e.preventDefault();
         setLoadingStatus(true)
         //   Uploading the img to Cloudnary data base
@@ -32,7 +33,7 @@ function WriteBlog() {
         data.append("file", selectedFile)
         data.append("upload_preset", "insta-clone")
         data.append("cloud_name", "rushi2784")
-       await fetch(`https://api.cloudinary.com/v1_1/insta-clone/image/upload`, {
+        await fetch(`https://api.cloudinary.com/v1_1/insta-clone/image/upload`, {
             method: "POST",
             body: data
         })
@@ -43,7 +44,8 @@ function WriteBlog() {
                 const payload = {
                     title,
                     content,
-                    img: data.url
+                    img: data.url,
+                    token
                 }
                 console.log(payload)
 
@@ -51,8 +53,13 @@ function WriteBlog() {
                     .then((res) => {
                         console.log(res)
                         setLoadingStatus(false)
-                        alert("Blog Added Success")
-                        navigate("/feed")
+                        if (res.type == 'ADD_BLOG_SUCCESS') {
+                            alert("Blog Added Success")
+                            navigate("/feed")
+                        }
+                        else {
+                            alert("Try again")
+                        }
                     })
             })
 
