@@ -41,7 +41,7 @@ function TopNavbar() {
 
                                 </div> : ""}</> : 
                                 <>
-                                <Nav.Link style={{ fontWeight: '600' }} className="rounded-3 me-3 bg-success text-light" onClick={() => navigate("/login")}   >SignIn</Nav.Link>
+                                <Nav.Link style={{ fontWeight: '600' }} className="rounded-3 me-3 bg-success text-light" onClick={() => navigate("/singin")}   >SignIn</Nav.Link>
                                 <Nav.Link style={{ fontWeight: '600' }} className="rounded-3 me-3 bg-light text-dark" onClick={() => navigate("/signup")}>SignUp</Nav.Link>
                                 {/* <Nav.Link className="rounded-3 me-3 bg-danger text-white" onClick={LogOut}>LogOut</Nav.Link> */}
                             </>
