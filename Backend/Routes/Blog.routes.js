@@ -1,7 +1,6 @@
 const BlogRoutes = require("express").Router();
 
 const BlogModel = require("../Model/Blog.model")
-const userModel = require("../Model/User.model");
 
 // API for creating the Blog
 
@@ -9,13 +8,9 @@ BlogRoutes.post("/", async (req, res) => {
 
     const { title, content, img, userId } = req.body;
 
-
-    const user = await userModel.findOne({ _id: userId })
-    console.log(user)
     const new_blog = new BlogModel({
 
         title,
-        author_name: user.name,
         content,
         img,
         userId
@@ -28,7 +23,8 @@ BlogRoutes.post("/", async (req, res) => {
 
 BlogRoutes.get("/all", async (req, res) => {
 
-    const Blogs = await BlogModel.find();
+
+    const Blogs = await BlogModel.find().populate("userId").sort({ createdAt: -1 });
 
     res.status(200).send(Blogs)
 })
@@ -41,9 +37,9 @@ BlogRoutes.get("/", async (req, res) => {
     const { userId } = req.body
 
 
-    const userBlog = await BlogModel.find({ userId })
+    const userBlog = await BlogModel.find({ userId }).populate("userId").sort({ createdAt: -1 });
 
-    res.status(200).send(userBlog)
+    res.status(200).send({ userBlog })
 })
 
 

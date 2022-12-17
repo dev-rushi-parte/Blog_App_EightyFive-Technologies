@@ -4,9 +4,9 @@ const blogSchema = new mongoose.Schema({
 
     title: { type: String, required: true },
     content: { type: String, required: true },
-    author_name: { type: String },
-    img: { type: String },
-    userId: { type: String }
+    img: { type: String, required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "users" }
+
 
 }, {
     timestamps: true

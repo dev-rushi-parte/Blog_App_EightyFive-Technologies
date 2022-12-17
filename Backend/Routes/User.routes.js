@@ -9,7 +9,7 @@ const userModel = require("../Model/User.model");
 
 AuthRouter.post("/signup", async (req, res) => {
     const { email, password, name } = req.body;
-
+    console.log(email)
     const checkUserEmail = await userModel.findOne({ email });
 
     if (checkUserEmail) {
@@ -23,9 +23,9 @@ AuthRouter.post("/signup", async (req, res) => {
                 res.status(503).send({ "message": "please try again" })
             }
             const user = new userModel({
+                name,
                 email,
-                password: hash,
-                name
+                password: hash
             })
 
             await user.save();
