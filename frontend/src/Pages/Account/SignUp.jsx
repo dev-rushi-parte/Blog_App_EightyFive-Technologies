@@ -33,12 +33,13 @@ function SignUp() {
             .then((res) => {
 
                 // console.log(res)
-                setName("")
-                setEmail("")
-                setPassword("")
+
 
                 if (res.type == "SINGUP_SUCCESS") {
-
+                    
+                    setName("")
+                    setEmail("")
+                    setPassword("")
                     alert("Singup Success")
                     navigate("/singin")
 
