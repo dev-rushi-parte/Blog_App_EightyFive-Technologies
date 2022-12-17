@@ -1,5 +1,6 @@
 import React from 'react'
 import TopNavbar from '../Component/Navbar'
+import BlogPost from './BlogPost'
 
 function BlogFeed() {
     return (
@@ -7,8 +8,11 @@ function BlogFeed() {
             <TopNavbar />
             <div style={{ marginTop: "8rem" }}>
 
-                <div style={{ width: '40rem' }} className='pb-4 container center_div col-md-6 border border-2 border-dark rounded-3'>
-                    <h1 className='text-center  '>post</h1>
+                {/* <div style={{ width: '35rem' }} className='pb-4 container center_div col-md-6 border border-1 border-dark rounded-3'> */}
+                <div style={{ width: '35rem' }} className='pb-4 container center_div col-md-6 border border-1 border-dark'>
+
+                    <BlogPost />
+
 
 
                 </div>

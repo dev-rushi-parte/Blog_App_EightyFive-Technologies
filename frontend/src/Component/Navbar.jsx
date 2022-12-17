@@ -24,11 +24,23 @@ function TopNavbar() {
 
         window.location.reload()
     }
+
+
+    const HomePageNavigate = () => {
+        if (token != "") {
+            navigate("/feed")
+        }
+        else {
+            navigate("/")
+        }
+
+    }
+
     return (
         <div>
             <Navbar bg="dark" fixed="top" className='p-3' variant="dark" expand="lg">
                 <Container>
-                    <Navbar.Brand style={{ cursor: "pointer", fontWeight: '700' }} onClick={() => navigate("/feed")}>Blog App</Navbar.Brand>
+                    <Navbar.Brand style={{ cursor: "pointer", fontWeight: '700' }} onClick={HomePageNavigate}>Blog App</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ms-auto">

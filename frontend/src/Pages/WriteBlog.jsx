@@ -24,7 +24,7 @@ function WriteBlog() {
     const navigate = useNavigate()
 
 
-    const SubmitForm = (e) => {
+    const SubmitForm = async(e) => {
         e.preventDefault();
         setLoadingStatus(true)
         //   Uploading the img to Cloudnary data base
@@ -32,7 +32,7 @@ function WriteBlog() {
         data.append("file", selectedFile)
         data.append("upload_preset", "insta-clone")
         data.append("cloud_name", "rushi2784")
-        fetch(`https://api.cloudinary.com/v1_1/insta-clone/image/upload`, {
+       await fetch(`https://api.cloudinary.com/v1_1/insta-clone/image/upload`, {
             method: "POST",
             body: data
         })
