@@ -1,6 +1,8 @@
 const BlogRoutes = require("express").Router();
 
 const BlogModel = require("../Model/Blog.model")
+const userModel = require("../Model/User.model");
+
 
 // API for creating the Blog
 
@@ -84,5 +86,42 @@ BlogRoutes.patch("/:blogId", async (req, res) => {
         res.status(404).send("blog not found")
     }
 })
+
+// signIn User API
+
+BlogRoutes.get("/user", async (req, res) => {
+
+    try {
+        const user = await userModel.findOne({ _id: req.body.userId }).select('-password')
+
+        res.status(200).send(user)
+    }
+    catch (err) {
+        res.status(500).send(err)
+    }
+})
+
+// Update user API
+
+BlogRoutes.put("/user/:id", async (req, res) => {
+    const { userId } = req.body;
+    const { id } = req.params;
+
+    if (userId === id) {
+        try {
+
+            const user = await userModel.findByIdAndUpdate(id, { $set: req.body });
+            res.status(201).send({ "message": "Account has been updated", user });
+        }
+        catch (err) {
+            res.status(500).send(err);
+        }
+    }
+    else {
+        res.status(401).send("You can update only your Account!")
+
+    }
+})
+
 
 module.exports = BlogRoutes;
