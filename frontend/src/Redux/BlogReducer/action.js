@@ -142,3 +142,38 @@ export const UpdateUser = (payload) => async (dispatch) => {
             return dispatch(update_user_failure(err));
         })
 }
+
+
+
+export const update_blog_request = () => ({
+    type: types.UPDATE_BLOG_REQUEST
+})
+
+export const update_blog_success = (payload) => ({
+    type: types.UPDATE_BLOG_SUCCESS,
+    payload
+});
+
+export const update_blog_failure = (payload) => ({
+    type: types.UPDATE_BLOG_ERROR,
+    payload
+})
+
+export const UpdateBlog = (payload) => async (dispatch) => {
+
+    dispatch(update_blog_request());
+
+    return await axios.put(`http://localhost:8080/blog/${payload.id}`, payload, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${payload.token}`
+        }
+    })
+        .then((res) => {
+            // console.log(res.data)
+            return dispatch(update_blog_success(res.data))
+        })
+        .catch((err) => {
+            return dispatch(update_blog_failure(err));
+        })
+}

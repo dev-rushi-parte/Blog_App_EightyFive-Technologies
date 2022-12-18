@@ -93,6 +93,25 @@ export const BlogReducer = (state = inState, action) => {
                 isError: true
             }
         }
+
+        case types.UPDATE_BLOG_REQUEST: {
+            return {
+                ...state,
+                isLoading: true
+            }
+        }
+        case types.UPDATE_BLOG_SUCCESS: {
+            return {
+                ...state,
+                isLoading: false
+            }
+        }
+        case types.UPDATE_BLOG_ERROR: {
+            return {
+                ...state,
+                isError: true
+            }
+        }
         default:
             return state
 

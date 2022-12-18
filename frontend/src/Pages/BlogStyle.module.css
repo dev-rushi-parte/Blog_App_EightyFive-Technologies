@@ -94,6 +94,36 @@
 
 }
 
+
+#Blog_Upate_img {
+    width: 500px;
+    height: 300px;
+    margin: auto;
+    margin-top: 50px;
+    position: relative;
+
+
+}
+
+#Blog_Upate_img img {
+    width: 500px;
+    height: 300px;
+    object-fit: contain;
+    cursor: pointer;
+
+}
+
+
+#blog_update_hideFile {
+    cursor: pointer;
+    display: block;
+    opacity: 0;
+    position: absolute;
+    width: 500px;
+    height: 300px;
+
+}
+
 #userInfo {
     width: 500px;
     height: 200px;
@@ -126,4 +156,30 @@
         display: flex;
         flex-direction: column;
     }
+}
+
+#SpinnerPosition {
+    display: flex;
+    align-items: center;
+}
+
+#editSymbol {
+    margin-left: auto;
+}
+
+#dropdown_toggle {
+    outline: none;
+    border: none;
+}
+
+#dropdown_toggle::after {
+    content: none;
+
+}
+
+#warring {
+
+    color: tomato;
+    text-align: center;
+    text-transform: capitalize;
 }

@@ -40,7 +40,6 @@ function Profile() {
 
           const payload = {
             id: user?._id,
-            email,
             img: data.url,
             token,
             name
@@ -63,7 +62,6 @@ function Profile() {
     else {
       const payload = {
         id: user?._id,
-        email,
         token,
         name
       }
@@ -97,6 +95,7 @@ function Profile() {
     <div>
       <TopNavbar />
       <div id={style.ProfileBox} style={{ marginTop: "8rem" }}>
+
         {user == null ? <>
           <Spinner style={{ width: "6rem", height: "6rem" }} className='container center_div mt-5 ' animation="border" role="status" />
         </> : <>
@@ -114,11 +113,7 @@ function Profile() {
 
                 <Form.Group className="mb-3 col-md-10 col-sm-10 col-xs-4" >
                   <Form.Label>Email address</Form.Label>
-                  <Form.Control value={email}
-                    maxLength="30" required
-                    onChange={(e) => setEmail(e.target.value)}
-                    type="email"
-                    placeholder="Enter email" />
+                  <p style={{ fontSize: '20px', fontWeight: "600" }}>{email}</p>
 
                 </Form.Group>
 
@@ -136,7 +131,7 @@ function Profile() {
 
                 </Form.Group>
               </Form>
-              <Button disabled={(name !== user?.name || email !== user?.email || img !== '') ? false : true}
+              <Button disabled={(name !== user?.name || img !== '') ? false : true}
                 style={{ marginLeft: '330px' }} className='col-md-4 mt-5' variant="primary"
                 onClick={HandelUpdate}>
                 Update

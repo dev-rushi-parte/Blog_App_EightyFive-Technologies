@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import TopNavbar from '../Component/Navbar'
 import { Get_All_Blog } from '../Redux/BlogReducer/action';
 import BlogPost from './BlogPost'
-
+import Spinner from 'react-bootstrap/Spinner';
+import style from './BlogStyle.module.css'
 function BlogFeed() {
     const [data, setData] = useState()
-
+    const [updates, setUpdates] = useState(false)
     const dispatch = useDispatch();
     const token = useSelector((state) => state.auth.authToken);
 
@@ -17,7 +18,7 @@ function BlogFeed() {
             .then((res) => {
                 setData(res.payload)
             })
-    }, [])
+    }, [updates])
 
     // console.log(data)
     return (
@@ -25,13 +26,14 @@ function BlogFeed() {
             <TopNavbar />
             <div style={{ marginTop: "8rem" }}>
 
-                {/* <div style={{ width: '35rem' }} className='pb-4 container center_div col-md-6 border border-1 border-dark rounded-3'> */}
-                <div style={{ width: '40rem' }}
+                {data == null ? <div id={style.SpinnerPosition}>
+                    <Spinner style={{ width: "6rem", height: "6rem" }} className='container center_div mt-5 ' animation="border" role="status" />
+                </div> : <div style={{ width: '40rem' }}
                     className='pb-4 container center_div col-md-6 '>
                     {
                         data?.map((item, i) => (
                             <div key={i}>
-                                <BlogPost item={item} />
+                                <BlogPost item={item} setUpdates={setUpdates} />
 
                             </div>
                         ))
@@ -39,7 +41,7 @@ function BlogFeed() {
 
 
 
-                </div>
+                </div>}
 
             </div>
         </div>

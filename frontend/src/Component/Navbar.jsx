@@ -16,7 +16,7 @@ function TopNavbar() {
 
     const token = useSelector((state) => state.auth.authToken);
     const user = useSelector((state) => state.blog.userData);
-    console.log(user)
+    // console.log(user)
 
     // console.log(token)
 
