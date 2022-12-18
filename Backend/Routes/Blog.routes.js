@@ -53,9 +53,9 @@ BlogRoutes.delete("/:blogId", async (req, res) => {
     const { userId } = req.body;
     const blog = await BlogModel.findOne({ _id: blogId });
 
-    if (blog.userId === userId) {
+    if (blog.userId.valueOf() === userId) {
         await BlogModel.findOneAndDelete({ _id: blogId })
-        return res.send({ "message": "successfull deletes" })
+        return res.status(200).send({ "message": "successfull deletes" })
 
     }
     else {
@@ -66,14 +66,15 @@ BlogRoutes.delete("/:blogId", async (req, res) => {
 
 // API for edit the blog only user can edit there blog
 
-BlogRoutes.patch("/:blogId", async (req, res) => {
+BlogRoutes.put("/:blogId", async (req, res) => {
 
     const { blogId } = req.params;
     const { userId } = req.body;
     const blog = await BlogModel.findOne({ _id: blogId })
-    // console.log(blog)
+    console.log(blog)
+    // console.log(blog.userId.valueOf())
     if (blog !== null) {
-        if (blog.userId === userId) {
+        if (blog.userId.valueOf() === userId) {
 
             const new_blog = await BlogModel.findOneAndUpdate({ _id: blogId }, req.body, { new: true })
             return res.status(200).send({ "message": "successfully updated", new_blog })
@@ -87,7 +88,7 @@ BlogRoutes.patch("/:blogId", async (req, res) => {
     }
 })
 
-// signIn User API
+//  API for getting signIn User
 
 BlogRoutes.get("/user", async (req, res) => {
 
@@ -101,7 +102,7 @@ BlogRoutes.get("/user", async (req, res) => {
     }
 })
 
-// Update user API
+//  API for Update user info
 
 BlogRoutes.put("/user/:id", async (req, res) => {
     const { userId } = req.body;
