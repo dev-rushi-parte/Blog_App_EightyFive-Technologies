@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { UpdateBlog } from '../Redux/BlogReducer/action';
+import { DeleteBlog, UpdateBlog } from '../Redux/BlogReducer/action';
 import Spinner from 'react-bootstrap/Spinner';
 
 
@@ -17,31 +17,38 @@ function BlogPost(props) {
     const [data, setdata] = useState();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const navigate = useNavigate()
-    const [selectedFile, setSelectedFile] = useState("");
     const [preview, setPreview] = useState();
+    const [selectedFile, setSelectedFile] = useState("");
     const [loadingStatus, setLoadingStatus] = useState(false)
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
-
+    const user = useSelector((state) => state.blog.userData);
     const token = useSelector((state) => state.auth.authToken);
 
+    // edit modal close
     const handleClose = () => setShow(false);
 
-    // console.log(data?._id)
+    //   Edit Modal show
     const handleShow = (item) => {
-        console.log(item)
+
         setTitle(item.title)
         setContent(item.content)
         setdata(item)
         setShow(true)
     };
 
-    // console.log(props.setUpdates)
 
+
+    // Updating the Blog
     const handleUpdate = async (e) => {
+
         setLoadingStatus(true)
+
+        // Edit request with Image
         if (selectedFile !== '') {
+
+            // uploading Img to cloudinary
             const dataa = new FormData();
             dataa.append("file", selectedFile)
             dataa.append("upload_preset", "insta-clone")
@@ -52,7 +59,8 @@ function BlogPost(props) {
             })
                 .then((res) => res.json())
                 .then((imges) => {
-                    console.log(imges.url)
+
+
                     // Post the Image to our data base
                     console.log(data)
                     const payload = {
@@ -62,7 +70,8 @@ function BlogPost(props) {
                         token,
                         content
                     }
-                    console.log(payload)
+
+                    // dispatch updated blog data
                     dispatch(UpdateBlog(payload))
                         .then((res) => {
                             console.log(res)
@@ -78,14 +87,17 @@ function BlogPost(props) {
 
                 })
         }
+        // edit request without Image
         else {
+
             const payload = {
                 id: data?._id,
                 title,
                 token,
                 content
             }
-            console.log(payload)
+
+            // dispatch updated blog data
             dispatch(UpdateBlog(payload))
                 .then((res) => {
                     console.log(res)
@@ -100,7 +112,7 @@ function BlogPost(props) {
         }
     }
 
-    // Only for Preview
+    // Only for Preview Image
     useEffect(() => {
 
         if (!selectedFile) {
@@ -127,18 +139,51 @@ function BlogPost(props) {
         // I've kept this example simple by using the first image instead of multiple
         setSelectedFile(e.target.files[0])
     }
+
+
+    // Delete the blog event
+
+    const handelDelete = (item) => {
+
+        const payload = {
+            token,
+            id: item?._id
+        }
+
+        dispatch(DeleteBlog(payload))
+            .then((res) => {
+                console.log(res)
+                props.setUpdates(prv => !prv)
+                alert("Blog delete successfull")
+            })
+    }
+
+
+    // handel profile navigate
+
+    const handelProfileNavigate = () => {
+
+        if (props?.item?.userId._id === user?._id) {
+            navigate("/profile")
+
+        }
+    }
+
     return (
         <div id={style.post} className='rounded-3 mt-3'>
 
             <div id={style.head}>
-                <div id={style.imgBox} onClick={() => navigate("/profile")} >
+
+                <div id={style.imgBox} onClick={handelProfileNavigate} >
                     {props?.item?.userId?.img == '' ? <img src="\img\ProfilePic.jpg" alt='img1' /> : <img src={props?.item?.userId?.img} alt='img2' />}
 
                 </div>
                 <div>
-                    <p onClick={() => navigate("/profile")} >{props?.item?.userId?.name}</p>
+                    <p onClick={handelProfileNavigate} >{props?.item?.userId?.name}</p>
                 </div>
-                <div id={style.editSymbol}>
+
+                {/* conditional rendring for edit and delete only login user can delete or edit there Blog */}
+                {props?.item?.userId._id === user?._id ? <div id={style.editSymbol}>
 
                     <Dropdown>
                         <Dropdown.Toggle id={style.dropdown_toggle} variant="white">
@@ -148,12 +193,12 @@ function BlogPost(props) {
                         <Dropdown.Menu variant="light" className='ms-4'>
                             <Dropdown.Item onClick={() => handleShow(props.item)} >Edit</Dropdown.Item>
                             <Dropdown.Divider />
-                            <Dropdown.Item >Delete</Dropdown.Item>
+                            <Dropdown.Item onClick={() => { handelDelete(props.item) }}>Delete</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
 
 
-                </div>
+                </div> : ""}
             </div>
 
             <div className='p-3 fs-3 fw-bold'>
@@ -172,9 +217,7 @@ function BlogPost(props) {
 
 
 
-
-
-
+            {/* Edit Modal */}
 
             <Modal size="lg" show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -186,7 +229,7 @@ function BlogPost(props) {
 
                     <Modal.Body>
                         <Form>
-                            <p id={style.warring}>Click On Image to change it</p>
+                            <p id={style.warring}>*Click On Image to change it</p>
                             <div id={style.Blog_Upate_img}>
 
                                 <input onChange={onSelectFile} id={style.blog_update_hideFile} type="file" />
@@ -213,7 +256,6 @@ function BlogPost(props) {
                                     as="textarea"
                                     value={content}
                                     onChange={(e) => setContent(e.target.value)}
-
                                     rows={10} />
                             </Form.Group>
                         </Form>

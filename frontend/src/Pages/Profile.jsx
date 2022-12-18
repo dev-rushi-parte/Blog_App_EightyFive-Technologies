@@ -3,11 +3,12 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import TopNavbar from '../Component/Navbar'
-import { GetUser, UpdateUser } from '../Redux/BlogReducer/action';
+import { GetUser, Get_User_Blog, UpdateUser } from '../Redux/BlogReducer/action';
 import style from "./BlogStyle.module.css"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/esm/Button';
 import Spinner from 'react-bootstrap/Spinner';
+import UserAllPost from './UserAllPost';
 
 function Profile() {
 
@@ -17,6 +18,8 @@ function Profile() {
   const [update, setUpdate] = useState(false);
   const [loading, setLoading] = useState(false)
   const [img, setImg] = useState("")
+  const [postData, setPostData] = useState();
+
 
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.authToken);
@@ -25,6 +28,7 @@ function Profile() {
   const HandelUpdate = (e) => {
     setLoading(true)
     if (img !== '') {
+
       const data = new FormData();
       data.append("file", img)
       data.append("upload_preset", "insta-clone")
@@ -89,7 +93,15 @@ function Profile() {
         setEmail(res.payload.email)
         setName(res.payload.name)
       })
+
+    dispatch(Get_User_Blog(token))
+      .then((res) => {
+        // console.log(res.payload)
+        setPostData(res.payload)
+      })
+
   }, [update])
+
 
   return (
     <div>
@@ -103,6 +115,7 @@ function Profile() {
             <Spinner style={{ width: "6rem", height: "6rem" }} className='container center_div mt-5 ' animation="border" role="status" />
           </> : <>
             <div id={style.ProfileImg}>
+              <p id={style.warring}>*Click On Image to change it</p>
 
               <input onChange={(e) => setImg(e.target.files[0])} id={style.hideFile} type="file" />
               {user?.img == '' ? <img src="\img\ProfilePic.jpg" alt='img1' /> : <img src={user?.img} alt='img2' />}
@@ -118,11 +131,12 @@ function Profile() {
                 </Form.Group>
 
 
-                <Form.Group className="mb-3 col-md-10 col-sm-10">
+                <Form.Group className="mb-3 col-md-10 col-sm-10 col-xs-10">
                   <Form.Label>Name</Form.Label>
 
                   <Form.Control
                     value={name}
+                    className="col-md-10 col-sm-10 col-xs-10"
                     minLength="6" required
                     onChange={(e) => setName(e.target.value)}
                     type={'text'}
@@ -143,6 +157,14 @@ function Profile() {
 
       </div>
 
+      <div id={style.UserPostBox}>
+        {postData?.map((item, i) => (
+          <div key={i}>
+            <UserAllPost item={item} />
+
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

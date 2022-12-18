@@ -36,12 +36,12 @@ function SignUp() {
 
 
                 if (res.type == "SINGUP_SUCCESS") {
-                    
+
                     setName("")
                     setEmail("")
                     setPassword("")
                     alert("Singup Success")
-                    navigate("/singin")
+                    navigate("/signin")
 
                 }
                 else if (res.payload.response.status == 403) {

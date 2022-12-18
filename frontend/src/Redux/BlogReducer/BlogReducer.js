@@ -52,6 +52,25 @@ export const BlogReducer = (state = inState, action) => {
                 isError: true
             }
         }
+        case types.GET_USER_BLOG_REQUEST: {
+            return {
+                ...state,
+                isLoading: true
+            }
+        }
+        case types.GET_USER_BLOG_SUCCESS: {
+            return {
+                ...state,
+                isLoading: false,
+                payload
+            }
+        }
+        case types.GET_USER_BLOG_ERROR: {
+            return {
+                ...state,
+                isError: true
+            }
+        }
         case types.GET_USER_REQUEST: {
             return {
                 ...state,

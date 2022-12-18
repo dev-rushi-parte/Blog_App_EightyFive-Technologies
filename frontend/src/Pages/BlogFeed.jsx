@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import TopNavbar from '../Component/Navbar'
-import { Get_All_Blog } from '../Redux/BlogReducer/action';
+import { GetUser, Get_All_Blog } from '../Redux/BlogReducer/action';
 import BlogPost from './BlogPost'
 import Spinner from 'react-bootstrap/Spinner';
 import style from './BlogStyle.module.css'
@@ -20,6 +20,10 @@ function BlogFeed() {
             })
     }, [updates])
 
+
+    useEffect(() => {
+        dispatch(GetUser(token))
+    }, [])
     // console.log(data)
     return (
         <div>
