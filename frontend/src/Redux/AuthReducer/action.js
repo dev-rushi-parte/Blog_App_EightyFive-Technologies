@@ -26,11 +26,11 @@ export const singupFailure = (payload) => {
 }
 
 
-export const SingupUser = (payload) => (dispatch) => {
+export const SingupUser = (payload) => async(dispatch) => {
     dispatch(singupRequest());
 
 
-    return axios.post("http://localhost:8080/user/signup", payload)
+    return await axios.post("http://localhost:8080/user/signup", payload)
         .then((res) => {
             // console.log(res)
             return dispatch(singupSuccess(res))
@@ -59,13 +59,13 @@ export const loginFailure = (payload) => ({
 })
 
 
-export const UserLogin = (payload) => (dispatch) => {
+export const UserLogin = (payload) => async(dispatch) => {
 
     dispatch(loginRequest());
     const headers = {
         "Content-Type": "application/json",
     };
-    return axios.post("http://localhost:8080/user/signin", payload, {
+    return await axios.post("http://localhost:8080/user/signin", payload, {
         headers: headers,
     })
         .then((res) => {

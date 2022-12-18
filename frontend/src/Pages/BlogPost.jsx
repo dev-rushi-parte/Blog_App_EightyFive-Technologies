@@ -11,23 +11,24 @@ function BlogPost(props) {
 
             <div id={style.head}>
                 <div id={style.imgBox} onClick={() => navigate("/profile")} >
-                    <img src='img\my.jpg' alt='img' />
+                    {props?.item?.userId?.img == '' ? <img src="\img\ProfilePic.jpg" alt='img1' /> : <img src={props?.item?.userId?.img} alt='img2' />}
+
                 </div>
                 <div>
                     <p onClick={() => navigate("/profile")} >{props?.item?.userId?.name}</p>
                 </div>
             </div>
 
-            <div className='ps-2 pt-3'>
-                <p> <span>Title - </span>{props.item.title}</p>
+            <div className='p-3 fs-3 fw-bold'>
+                <p> {props.item.title}</p>
             </div>
 
             <div id={style.blogImg}>
                 <img src={props.item.img} alt="img" />
             </div>
 
-            <div>
-                <p><span>Content - </span>{props.item.content}</p>
+            <div className='p-3'>
+                <p>{props.item.content}</p>
             </div>
         </div>
     )

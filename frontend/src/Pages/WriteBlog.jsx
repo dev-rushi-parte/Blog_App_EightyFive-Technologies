@@ -131,7 +131,7 @@ function WriteBlog() {
 
                             <Form.Label>Title</Form.Label>
                             <Form.Control value={title}
-                                maxLength="30" required
+                                 required
                                 onChange={(e) => setTitle(e.target.value)}
                                 type="text"
                                 placeholder="Write Title" />
@@ -145,9 +145,11 @@ function WriteBlog() {
                                 controlId="floatingTextarea"
                                 label="Write Content Here"
                                 className="mb-3"
+
                             >
                                 <Form.Control as="textarea"
                                     value={content} required
+                                    style={{ height: '300px' }}
                                     onChange={(e) => setContent(e.target.value)}
                                 />
                             </FloatingLabel>

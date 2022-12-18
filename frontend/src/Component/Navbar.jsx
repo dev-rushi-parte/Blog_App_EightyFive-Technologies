@@ -15,6 +15,8 @@ function TopNavbar() {
     const [drop, setDrop] = useState(false)
 
     const token = useSelector((state) => state.auth.authToken);
+    const user = useSelector((state) => state.blog.userData);
+    console.log(user)
 
     // console.log(token)
 
@@ -51,7 +53,8 @@ function TopNavbar() {
                                     Write Blog
                                 </Nav.Link>
                                 <Nav.Link onClick={() => { setDrop(prv => !prv) }} className=" bg-light" id={style.img}>
-                                    <img src='img\my.jpg' alt='userImg' />
+                                    {user?.img == '' ? <img src="\img\ProfilePic.jpg" alt='img1' /> : <img src={user?.img} alt='img2' />}
+
                                 </Nav.Link>
                                 {drop ? <div id={style.dropDown_outer}>
                                     <Nav.Link id={style.dropDown} className='flex flex-col'>
