@@ -31,10 +31,7 @@ function SignUp() {
         console.log(payload)
         dispatch(SingupUser(payload))
             .then((res) => {
-
-                // console.log(res)
-
-
+               
                 if (res.type == "SINGUP_SUCCESS") {
 
                     setName("")

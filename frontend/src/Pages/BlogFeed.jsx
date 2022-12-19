@@ -24,7 +24,7 @@ function BlogFeed() {
     useEffect(() => {
         dispatch(GetUser(token))
     }, [])
-    // console.log(data)
+ 
     return (
         <div>
             <TopNavbar />

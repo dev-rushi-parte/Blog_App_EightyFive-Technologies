@@ -39,19 +39,18 @@ function Profile() {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data.url)
-          // Post the Image to our data base
 
+          // Post the Image to our data base
           const payload = {
             id: user?._id,
             img: data.url,
             token,
             name
           }
-          // console.log(payload)
+
           dispatch(UpdateUser(payload))
             .then((res) => {
-              console.log(res)
+
               if (res.type == 'UPADATE_USER_INFO_SUCCESS') {
 
                 setUpdate(prv => !prv)
@@ -69,7 +68,7 @@ function Profile() {
         token,
         name
       }
-      // console.log(payload)
+
       dispatch(UpdateUser(payload))
         .then((res) => {
           console.log(res)

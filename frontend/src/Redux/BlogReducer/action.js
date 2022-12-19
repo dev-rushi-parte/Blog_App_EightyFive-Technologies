@@ -19,7 +19,7 @@ export const AddBlog = (payload) => async (dispatch) => {
     dispatch(addblogRequest());
 
 
-    return await axios.post("http://localhost:8080/blog/", payload, {
+    return await axios.post("https://blogbackend-563d.up.railway.app/blog/", payload, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${payload.token}`
@@ -56,7 +56,7 @@ export const Get_All_Blog = (token) => async (dispatch) => {
     dispatch(get_all_post_request());
 
 
-    return await axios.get("http://localhost:8080/blog/all", {
+    return await axios.get("https://blogbackend-563d.up.railway.app/blog/all", {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
@@ -94,7 +94,7 @@ export const GetUser = (token) => async (dispatch) => {
 
     dispatch(get_user_request());
 
-    return await axios.get("http://localhost:8080/blog/user", {
+    return await axios.get("https://blogbackend-563d.up.railway.app/blog/user", {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
@@ -128,7 +128,7 @@ export const UpdateUser = (payload) => async (dispatch) => {
 
     dispatch(update_user_request());
 
-    return await axios.put(`http://localhost:8080/blog/user/${payload.id}`, payload, {
+    return await axios.put(`https://blogbackend-563d.up.railway.app/blog/user/${payload.id}`, payload, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${payload.token}`
@@ -163,7 +163,7 @@ export const UpdateBlog = (payload) => async (dispatch) => {
 
     dispatch(update_blog_request());
 
-    return await axios.put(`http://localhost:8080/blog/${payload.id}`, payload, {
+    return await axios.put(`https://blogbackend-563d.up.railway.app/blog/${payload.id}`, payload, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${payload.token}`
@@ -197,7 +197,7 @@ export const DeleteBlog = (payload) => async (dispatch) => {
 
     dispatch(delete_blog_request());
 
-    return await axios.delete(`http://localhost:8080/blog/${payload.id}`, {
+    return await axios.delete(`https://blogbackend-563d.up.railway.app/blog/${payload.id}`, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${payload.token}`
@@ -233,7 +233,7 @@ export const Get_User_Blog = (token) => async (dispatch) => {
     dispatch(get_user_post_request());
 
 
-    return await axios.get("http://localhost:8080/blog/", {
+    return await axios.get("https://blogbackend-563d.up.railway.app/blog/", {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`

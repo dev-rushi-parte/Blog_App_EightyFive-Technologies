@@ -32,8 +32,6 @@ function SignIn() {
             .then((res) => {
 
                 // console.log(res)
-              
-
                 if (res.type == "LOGIN_SUCCESS") {
                     setEmail("")
                     setPassword("")
@@ -64,7 +62,8 @@ function SignIn() {
 
 
                 <div className='pb-4 container center_div col-md-4 border border-dark rounded-3 mt-5'>
-                    <h1 className='text-center mt-5 '>LogIn</h1>
+                    <h1 className='text-center mt-5 '>SignIn</h1>
+
                     <Form onSubmit={SubmitForm} className='mt-3 p-5' >
 
 
