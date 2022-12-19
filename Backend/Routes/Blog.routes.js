@@ -71,8 +71,8 @@ BlogRoutes.put("/:blogId", async (req, res) => {
     const { blogId } = req.params;
     const { userId } = req.body;
     const blog = await BlogModel.findOne({ _id: blogId })
-    console.log(blog)
-    // console.log(blog.userId.valueOf())
+
+   
     if (blog !== null) {
         if (blog.userId.valueOf() === userId) {
 

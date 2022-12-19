@@ -6,7 +6,7 @@ require('dotenv').config()
 
 const userModel = require("../Model/User.model");
 
-
+// SingUp user API
 AuthRouter.post("/signup", async (req, res) => {
     const { email, password, name } = req.body;
     console.log(email)
@@ -34,6 +34,7 @@ AuthRouter.post("/signup", async (req, res) => {
     }
 })
 
+// SingIn User API
 AuthRouter.post("/signin", async (req, res) => {
 
     const { email, password } = req.body;
@@ -47,7 +48,7 @@ AuthRouter.post("/signin", async (req, res) => {
 
     const hash = user.password;
     const userId = user._id;
-    // console.log(userId)
+
     bcrypt.compare(password, hash, (err, result) => {
         if (result) {
             var token = jwt.sign({ email, userId }, process.env.SECRETKEY);
